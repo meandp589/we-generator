@@ -1,0 +1,6 @@
+{
+    "routing": {
+        "templates":["/api/v1/templates"],
+        "templatesById":["/api/v1/templates/:tempateId"]
+    }
+}
