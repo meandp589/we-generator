@@ -1,82 +1,60 @@
 {
-    "apps": [{
-        "exec_mode": "fork",
-        "instances": 1,
-        "script": "index.js",
-        "name": "template-api",
-        "interpreter": "node",
-        "watch": ["src", "conf"],
-        "ignore_watch": ["node_modules", "logs", "src/utils/enum"],
-        "env": {
-            "app_host": "0.0.0.0",
-            "app_port": "3000",
-            "use_https": false,
-            "key": "ssl/server.key",
-            "cert": "ssl/server.crt",
-            "http_req_timeout": 10,
-            "session": 30,
-            "app":{
-                "baseUrlEmail":"http://127.0.0.1:3000",
-                "auth":{
-                    "fb": {
-                        "appId": "300495077747202",
-                        "appSecret": "f95eda75ac24990fe663b3fbe4139c41"
-                    },
-                    "google": {
-                        "appId": "138956954781-j5d7lusmifmthma20v5f85rlh8m1i0e3.apps.googleumfcontent.com",
-                        "appSecret": "s16WkmDoZqlVv3sQNH8r9P91"
-                    },
-                    "line": {
-                        "appId": "1613573682",
-                        "appSecret": "2f9879b5851a4b670b618551b81f7d4a"
-                    }
+    "apps": [
+        {
+            "exec_mode": "fork",
+            "instances": 1,
+            "script": "index.js",
+            "name": "template",
+            "interpreter": "node",
+            "watch": [
+                "src",
+                "views",
+                "public",
+                "conf",
+                "index.js"
+            ],
+            "ignore_watch": [
+                "node_modules",
+                "logs",
+                "src/utils/enum"
+            ],
+            "env": {
+                "app_host": "0.0.0.0",
+                "app_port": "3000",
+                "use_https": false,
+                "key": "ssl/server.key",
+                "cert": "ssl/server.crt",
+                "app": {
+                    "whiteListReq": ["*"]
                 },
-                "whiteListReq":["*"]
-            },
-            "service": {
-                "ex": {
-                    "default": {
-                        "conn_type": "http",
-                        "ip": "127.0.0.1",
-                        "port": "3001",
-                        "path": "/pms",
-                        "max_retry": 3,
-                        "timeout": 3,
-                        "retry_condition": "TIMEOUT|CONNECTION_ERROR"
-                    }
-                },
-                "mongodb": {
-                    "default": {
-                        "conn_type": "mongodb",
-                        "ip": "127.0.0.1",
-                        "port": "27017",
-                        "path": "/template-db",
+                "services": {
+                    "mongodb": {
+                        "conn_type": "mongodb+srv",
+                        "ip": "template.t9tsx.mongodb.net",
+                        "port": "",
+                        "path": "/template-db?retryWrites=true&w=majority",
                         "options": {
                             "user": "",
                             "pass": ""
                         }
                     }
-                }
-            },
-            "log": {
-                "name": "template-api",
-                "streams": [{
-                        "level": "info",
-                        "path": "./appLogs/template-api.log",
-                        "period": "1d"
-                    },
-                    {
+                },
+                "log": {
+                    "console": true,
+                    "useLog": "winston",
+                    "appLog": {
+                        "logName": "app.log",
                         "level": "debug",
-                        "path":  "./appLogs/template-api.log",
-                        "period": "1d"
+                        "interval": "1d",
+                        "size": "10m"
                     },
-                    {
-                        "level": "error",
-                        "path":  "./appLogs/template-api-error.log",
-                        "period": "1d"
+                    "winston": {
+                        "logName": "access.log",
+                        "interval": "1d",
+                        "size": "10m"
                     }
-                ]
+                }
             }
         }
-    }]
+    ]
 }

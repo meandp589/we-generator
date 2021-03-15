@@ -1,74 +1,78 @@
 module.exports = Object.freeze({
   SUCCESS: {
-    RESULT_CODE: "20000",
-    DEVELOPER_MESSAGE: "Success"
+    resultCode: "20000",
+    developerMessage: "Success"
   },
   CREATED: {
-    RESULT_CODE: "20100",
-    DEVELOPER_MESSAGE: "Created"
+    resultCode: "20100",
+    developerMessage: "Created"
   },
   FORBIDDEN: {
-    RESULT_CODE: "40300",
-    DEVELOPER_MESSAGE: "Forbidden"
+    resultCode: "40300",
+    developerMessage: "Forbidden"
   },
   MISSING_OR_INVALID_PARAMETER: {
-    RESULT_CODE: "40000",
-    DEVELOPER_MESSAGE: "Missing or invalid parameter"
+    resultCode: "40000",
+    developerMessage: "Missing or invalid parameter"
   },
   PAYLOAD_TOO_LARGE: {
-    RESULT_CODE: "41300",
-    DEVELOPER_MESSAGE: "Payload Too Large"
+    resultCode: "41300",
+    developerMessage: "Payload Too Large"
   },
   OVER_LIMIT_IMAGES: {
-    RESULT_CODE: "41400",
-    DEVELOPER_MESSAGE: "Over limit images"
+    resultCode: "41400",
+    developerMessage: "Over limit images"
   },
   INVALID_CODE: {
-    RESULT_CODE: "40001",
-    DEVELOPER_MESSAGE: "Invalid code"
+    resultCode: "40001",
+    developerMessage: "Invalid code"
   },
   CONFLICT: {
-    RESULT_CODE: "40900",
-    DEVELOPER_MESSAGE: "Conflict"
+    resultCode: "40900",
+    developerMessage: "Conflict"
   },
   INVALID_PERIOD_CODE: {
-    RESULT_CODE: "40002",
-    DEVELOPER_MESSAGE: "Invalid period code"
+    resultCode: "40002",
+    developerMessage: "Invalid period code"
   },
   PAYMENT_FAILED: {
-    RESULT_CODE: "40003",
-    DEVELOPER_MESSAGE: "Payment failed"
+    resultCode: "40003",
+    developerMessage: "Payment failed"
   },
   ACCESS_DENIED: {
-    RESULT_CODE: "40101",
-    DEVELOPER_MESSAGE: "Access denied"
+    resultCode: "40101",
+    developerMessage: "Access denied"
+  },
+  UNAUTHORIZED: {
+    resultCode: "40100",
+    developerMessage: "Unauthorized"
   },
   INVALID_CREDENTIALS: {
-    RESULT_CODE: "40106",
-    DEVELOPER_MESSAGE: "Invalid credentials"
+    resultCode: "40106",
+    developerMessage: "Invalid credentials"
   },
   DATA_EXIST: {
-    RESULT_CODE: "40301",
-    DEVELOPER_MESSAGE: "Data exist"
+    resultCode: "40301",
+    developerMessage: "Data exist"
   },
   UNKNOWN_URL: {
-    RESULT_CODE: "40400",
-    DEVELOPER_MESSAGE: "Unknown URL"
+    resultCode: "40400",
+    developerMessage: "Unknown URL"
   },
   DATA_NOT_FOUND: {
-    RESULT_CODE: "40401",
-    DEVELOPER_MESSAGE: "Data not found"
+    resultCode: "40401",
+    developerMessage: "Data not found"
   },
   SYSTEM_ERROR: {
-    RESULT_CODE: "50000",
-    DEVELOPER_MESSAGE: "System error"
+    resultCode: "50000",
+    developerMessage: "System error"
   },
   SERVER_BUSY: {
-    RESULT_CODE: "50300",
-    DEVELOPER_MESSAGE: "Server busy"
+    resultCode: "50300",
+    developerMessage: "Server busy"
   },
   SERVER_UNAVAILABLE: {
-    RESULT_CODE: "50301",
-    DEVELOPER_MESSAGE: "Server unavailable"
+    resultCode: "50301",
+    developerMessage: "Server unavailable"
   }
 });
