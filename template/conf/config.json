@@ -1,5 +1,6 @@
 {
     "routing": {
+        "healthCheck": ["/health-check"],
         "templates": ["/api/v1/templates"],
         "templateByID": ["/api/v1/templates/:templateID"]
     }
