@@ -19,9 +19,9 @@
                 "src/utils/enum"
             ],
             "env": {
-                "app_host": "0.0.0.0",
-                "app_port": "3000",
-                "use_https": false,
+                "appHost": "0.0.0.0",
+                "appPort": "3000",
+                "useHttps": false,
                 "key": "ssl/server.key",
                 "cert": "ssl/server.crt",
                 "app": {
@@ -29,7 +29,7 @@
                 },
                 "services": {
                     "mongodb": {
-                        "conn_type": "mongodb+srv",
+                        "connType": "mongodb+srv",
                         "ip": "template.t9tsx.mongodb.net",
                         "port": "",
                         "path": "/template-db?retryWrites=true&w=majority",

@@ -30,7 +30,7 @@ console.log("###############################################")
 /* ------------- [START INITIAL APPLICATION] ------------ */
 
 let server = {}
-if (env.use_https == true) {
+if (env.useHttps == true) {
   const privateKey = fs.readFileSync(env.key);
   const certificate = fs.readFileSync(env.cert);
   const options = { 
@@ -43,7 +43,7 @@ if (env.use_https == true) {
   server = http.createServer(app)
 }
 
-server.listen(process.env.app_port);
+server.listen(process.env.appPort);
 /* ------------- [END INITIAL APPLICATION] ------------ */
 process.on('warning', (warning) => {
   console.log(warning.stack);

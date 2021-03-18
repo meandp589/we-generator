@@ -3,8 +3,8 @@ const pathLib = require('path')
 const mongoose = require("mongoose");
 const doc = require('../../utils/enum/doc')
 const envService = JSON.parse(process.env.services);
-const { conn_type, ip, port, path, options } = envService.mongodb;
-const url_mongoDB = `${conn_type}://${ip}:${port}${path}`;
+const { connType, ip, port, path, options } = envService.mongodb;
+const url_mongoDB = `${connType}://${ip}:${port}${path}`;
 const camelToSnakeCase = str => str.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`);
 
 fs.readdirSync(`${__dirname}/schema`).forEach(filename => {
