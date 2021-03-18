@@ -1,6 +1,4 @@
 const conf = require("../../../conf/config.json");
-const validate = require('../../service/validate')
-
 
 module.exports = app => {
     let { healthCheck } = conf.routing;
