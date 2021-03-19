@@ -12,7 +12,7 @@ fs.readdirSync(`${__dirname}/schema`).forEach(filename => {
   let modelName = camelToSnakeCase( filenameRe ).toUpperCase()
   if(!doc[modelName] && !filename.includes(' ')) {
     let docInput = {...doc, [modelName]: filenameRe.replace(/^./, filenameRe[0].toUpperCase())}
-    fs.writeFileSync(pathLib.resolve(__dirname, "../utils/enum/doc.js"), `module.exports = Object.freeze(${JSON.stringify(docInput, null, 4)});`, function (err) {
+    fs.writeFileSync(pathLib.resolve(__dirname, "../../utils/enum/doc.js"), `module.exports = Object.freeze(${JSON.stringify(docInput, null, 4)});`, function (err) {
         if (err) return console.log(err);
         console.log("Create enum doc sccess.");
         require(`./schema/${filename}`)
