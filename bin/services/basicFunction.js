@@ -124,9 +124,9 @@ exports.generatePostmanFile = ({ env, inputPath, fileNames }) => {
             cmdData = JSON.parse(cmdData)
             let body = JSON.stringify(this.buildMessage(cmdData),undefined, 2);
             let name = fileName.replace('.json','')
-            let cmdPath = camelToSnakeCase(name)
-            let idName = cmdPath.replace(/\-/g, '_')
-            let templateName = cmdPath.replace(/\-/g, ' ')
+            let idName = camelToSnakeCase(name)
+            let cmdPath = idName.replace(/\_/g, '-')
+            let templateName = idName.replace(/\_/g, ' ')
             let postmanItem = {
                 name: templateName,
                 item: []
@@ -163,7 +163,6 @@ exports.generatePostmanFile = ({ env, inputPath, fileNames }) => {
     
     let postmanSchema = {
         "info": {
-            "_postman_id": "d4c3aa01-8ed8-4cf2-832b-b74d7cb63526",
             "name": env.projectName,
             "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
         },

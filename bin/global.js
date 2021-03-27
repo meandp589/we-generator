@@ -133,9 +133,6 @@ switch(cmd) {
 
             let postmanData = basicFunction.generatePostmanFile({ env, inputPath, fileNames: files })
             fs.writeFileSync(path.join(outputPath, `collection_${env.projectName.toLowerCase()}_${new Date().toISOString()}.json`), postmanData);
-
-            console.log(outputPath)
-           
         }
 
         if(type === 'modules') {
