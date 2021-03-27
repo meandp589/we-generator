@@ -1,0 +1,65 @@
+{
+    "name": "${templateName}",
+    "event": [
+        {
+            "listen": "test",
+            "script": {
+                "exec": [
+                    "pm.test(\"Status code is 200\", function () {",
+                    "    pm.response.to.have.status(200);",
+                    "});",
+                    "",
+                    "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                    "tests[\"Response time is acceptable\"] = responseTime < 200; // milliseconds",
+                    "tests[\"Content-Type header is set\"] = postman.getResponseHeader(\"Content-Type\");",
+                    "",
+                    "var data = JSON.parse(responseBody);",
+                    "pm.environment.set(\"${idName}_id\", data.resultData.${idName}_id);"
+                ],
+                "type": "text/javascript"
+            }
+        }
+    ],
+    "request": {
+        "auth": {
+            "type": "bearer",
+            "bearer": [
+                {
+                    "key": "token",
+                    "value": "{{access_token}}",
+                    "type": "string"
+                }
+            ]
+        },
+        "method": "POST",
+        "header": [
+            {
+                "key": "Content-Type",
+                "name": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+            }
+        ],
+        "body": {
+            "mode": "raw",
+            "raw": "{\n    \"scholarship_name\": \"scholarship_name\",\n    \"description\": \"description\",\n    \"image_path\": \"https://image_path.com\",\n    \"status\": \"ACTIVE\"\n}"
+        },
+        "url": {
+            "raw": "${baseURL}/${path}",
+            "host": [
+                "${baseURL}"
+            ],
+            "path": [
+                "${path}"
+            ],
+            "query": [
+                {
+                    "key": "",
+                    "value": "",
+                    "disabled": true
+                }
+            ]
+        }
+    },
+    "response": []
+}

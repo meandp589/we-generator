@@ -1,0 +1,52 @@
+{
+    "name": "${templateName}",
+    "request": {
+        "auth": {
+            "type": "bearer",
+            "bearer": [
+                {
+                    "key": "token",
+                    "value": "{{access_token}}",
+                    "type": "string"
+                }
+            ]
+        },
+        "method": "PATCH",
+        "header": [
+            {
+                "key": "Content-Type",
+                "name": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+            }
+        ],
+        "body": {
+            "mode": "raw",
+            "raw": "{\n    \"scholarship_name\": \"scholarship_name\",\n    \"description\": \"description\",\n    \"image_path\": \"https://image_path.com\",\n    \"status\": \"ACTIVE\"\n}"
+        },
+        "url": {
+            "raw": "${baseURL}/${path}/:${idName}",
+            "host": [
+                "${baseURL}"
+            ],
+            "path": [
+                "${path}",
+                ":${idName}"
+            ],
+            "query": [
+                {
+                    "key": "",
+                    "value": "",
+                    "disabled": true
+                }
+            ],
+            "variable": [
+                {
+                    "key": "${idName}",
+                    "value": "{{${idName}}}"
+                }
+            ]
+        }
+    },
+    "response": []
+}

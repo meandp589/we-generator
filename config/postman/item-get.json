@@ -1,0 +1,73 @@
+{
+    "name": "${templateName}",
+    "event": [
+        {
+            "listen": "test",
+            "script": {
+                "exec": [
+                    "pm.test(\"Status code is 200\", function () {",
+                    "    pm.response.to.have.status(200);",
+                    "});",
+                    "",
+                    "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                    "tests[\"Response time is acceptable\"] = responseTime < 200; // milliseconds",
+                    "tests[\"Content-Type header is set\"] = postman.getResponseHeader(\"Content-Type\");",
+                    "",
+                    "var data = JSON.parse(responseBody);",
+                    "pm.environment.set(\"${idName}\", data.resultData[0].${idName});"
+                ],
+                "type": "text/javascript"
+            }
+        }
+    ],
+    "protocolProfileBehavior": {
+        "disableBodyPruning": true
+    },
+    "request": {
+        "auth": {
+            "type": "bearer",
+            "bearer": [
+                {
+                    "key": "token",
+                    "value": "{{access_token}}",
+                    "type": "string"
+                }
+            ]
+        },
+        "method": "GET",
+        "header": [
+            {
+                "key": "Content-Type",
+                "name": "Content-Type",
+                "type": "text",
+                "value": "application/json"
+            }
+        ],
+        "body": {
+            "mode": "raw",
+            "raw": ""
+        },
+        "url": {
+            "raw": "${baseURL}/${path}",
+            "host": [
+                "${baseURL}"
+            ],
+            "path": [
+                "${path}"
+            ],
+            "query": [
+                {
+                    "key": "offset",
+                    "value": "0",
+                    "disabled": false
+                },
+                {
+                    "key": "limit",
+                    "value": "10",
+                    "disabled": false
+                }
+            ]
+        }
+    },
+    "response": []
+}

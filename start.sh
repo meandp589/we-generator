@@ -1,0 +1,1 @@
+./bin/global.js g postman schema-for-postman postman-file

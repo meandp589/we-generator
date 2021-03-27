@@ -3,6 +3,7 @@ const path = require('path')
 const fs = require('fs-extra')
 const shell = require('shelljs')
 const basicFunction = require('./services/basicFunction')
+const validate = require('./validate')
 
 let pathTemplate = path.join(__dirname, '..', 'template')
 let args = process.argv.splice(process.execArgv.length + 2);
@@ -47,16 +48,108 @@ switch(cmd) {
 
         let type = args[1];
         if(!type || (type !== 'modules' && type !== 'postman')) {
+            console.log(' ')
             console.log('usage: we generate <schematic> [options].')
             console.log(' ')
             console.log('Available Schematics:')
             console.log(' modules')
             console.log(' postman')
+            console.log(' ')
             break;
         }
             
-        
+        if(type === 'postman') {
+            let inputPath = args[2]
+            let outputPath = args[3]
+            if(!inputPath || !outputPath) {
+                console.log('usage: we generate postman <input path> <output path>')
+                break;
+            }
+            inputPath = path.join(process.cwd(), inputPath)
+            outputPath = path.join(process.cwd(), outputPath)
+            let isDirectory = false
+            try {
+                isDirectory = fs.lstatSync(inputPath).isDirectory()
+                if(!isDirectory) {
+                    console.log('Please enter your directory path.')
+                    break;
+                }
+            } catch (error) {
+                console.log('Please enter your directory path.')
+                break;
+            }
+            
+            let files = fs.readdirSync(inputPath).filter( d => d !== 'env.json')
+            if(files.length === 0) {
+                console.log('Please create file schema for generate postman file.')
+                break;
+            }
+
+            let env = ''
+            try {
+                env = fs.readFileSync(path.join(inputPath, 'env.json'),{ encoding:'utf8' })
+                try {
+                    env = JSON.parse(env)
+                } catch(e) {
+                    console.log('Please check JSON format (env.json).')
+                    break;
+                }
+                const validateError = validate.envSchema(env)
+                if (validateError) {
+                    console.log('Please check env format.')
+                    console.log('Error Message : '+ validateError)
+                    break;
+                }
+            } catch (error) {
+                console.log('Please create file env.json for generate postman file.')
+                console.log('Error Message : '+ error)
+                break;
+            }
+
+            //Format Validation
+            let isValidateFail = false
+            for (const fileName of files) {
+                let data = fs.readFileSync(path.join(inputPath, fileName),{ encoding:'utf8' });
+                try {
+                    data = JSON.parse(data)
+                } catch(e) {
+                    if(!isValidateFail) isValidateFail = !isValidateFail;
+                    console.log('Please check JSON format.')
+                    break;
+                }
+                const validateError = validate.postmanSchema(data)
+                if (validateError) {
+                    console.log('Please check schema format.')
+                    console.log('Error Message : '+ validateError)
+                    if(!isValidateFail) isValidateFail = !isValidateFail;
+                    break;
+                }
+            }
+            if(isValidateFail) break;
+
+            if (!fs.existsSync(outputPath)){
+                fs.mkdirSync(outputPath);
+            }
+
+            let postmanData = basicFunction.generatePostmanFile({ env, inputPath, fileNames: files })
+            fs.writeFileSync(path.join(outputPath, `collection_${env.projectName.toLowerCase()}_${new Date().toISOString()}.json`), postmanData);
+
+            console.log(outputPath)
+           
+        }
+
+        if(type === 'modules') {
+            console.log('coming soon.')
+        }
 
         break;
     default:
+        console.log(' ')
+        console.log('usage: we generate <schematic> [options].')
+        console.log(' ')
+        console.log('Available Schematics:')
+        console.log(' modules')
+        console.log(' postman')
+        console.log(' ')
+        break;
 }

@@ -1,0 +1,59 @@
+{
+    "name": "${templateName} by id",
+    "event": [
+        {
+            "listen": "test",
+            "script": {
+                "exec": [
+                    ""
+                ],
+                "type": "text/javascript"
+            }
+        }
+    ],
+    "protocolProfileBehavior": {
+        "disableBodyPruning": true
+    },
+    "request": {
+        "auth": {
+            "type": "bearer",
+            "bearer": [
+                {
+                    "key": "token",
+                    "value": "{{access_token}}",
+                    "type": "string"
+                }
+            ]
+        },
+        "method": "GET",
+        "header": [
+            {
+                "key": "Content-Type",
+                "name": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+            }
+        ],
+        "body": {
+            "mode": "raw",
+            "raw": ""
+        },
+        "url": {
+            "raw": "${baseURL}/${path}/:${idName}",
+            "host": [
+                "${baseURL}"
+            ],
+            "path": [
+                "${path}",
+                ":${idName}"
+            ],
+            "variable": [
+                {
+                    "key": "${idName}",
+                    "value": "{{${idName}}}"
+                }
+            ]
+        }
+    },
+    "response": []
+}
