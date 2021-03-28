@@ -43,6 +43,12 @@ switch(cmd) {
             .catch(err => console.error(err))
         break;
 
+    case 'v':
+    case 'version':
+        let version = JSON.parse(fs.readFileSync(path.join(__dirname, '../package.json'))).version
+        console.log(`We-generator Version : ${version}`)
+        break;
+
     case 'g':
     case 'generate':
 
