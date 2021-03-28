@@ -1,0 +1,21 @@
+{
+    "id": {
+        "type": "string",
+        "default": "{{id}}"
+    },
+    "name": {
+        "type": "string"
+    },
+    "status": {
+        "type": "string",
+        "enum": ["ACTIVE","INACTIVE"]
+    },
+    "date_now": {
+        "type": "string",
+        "format": "date"
+    },
+    "create_at": {
+        "type": "string",
+        "format": "date-time"
+    }
+}

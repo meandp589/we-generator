@@ -148,7 +148,9 @@ switch(cmd) {
             if(postmanData) {
                 if(Object.keys(JSON.parse(postmanData)).length === 0) break;
             }
-            fs.writeFileSync(path.join(outputPath, `collection_${env.projectName.toLowerCase()}_${new Date().toISOString()}.json`), postmanData);
+            let now = new Date()
+            let exportName = `${basicFunction.dateFormat(now)}_collection_${env.projectName.toLowerCase().replace(/ |-/g, '_')}.json`
+            fs.writeFileSync(path.join(outputPath, exportName), postmanData);
         }
 
         if(type === 'modules' || type === 'm') {

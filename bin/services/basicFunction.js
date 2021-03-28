@@ -26,6 +26,20 @@ exports.generateNumber = (length) => {
     return parseInt(result);
 }
 
+exports.dateFormat = (now) => {
+    let year = now.getFullYear()
+    let month = this.padStart((now.getMonth() + 1), 2, "0")
+    let date = this.padStart(now.getDate(), 2, "0")
+    let hours = this.padStart(now.getHours(), 2, "0")
+    let minutes = this.padStart(now.getMinutes(), 2, "0")
+    let seconds = this.padStart(now.getSeconds(), 2, "0")
+    return `${year}-${month}-${date}T${hours}:${minutes}:${seconds}`
+}
+
+exports.padStart = (str, num, data) => {
+    return str.toString().padStart(num, data)
+}
+
 exports.generateString = (length) => {
     const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
     let result = ' ';
