@@ -62,6 +62,8 @@ switch(cmd) {
             console.log('Available Schematics:')
             console.log(' modules')
             console.log(' postman')
+            console.log(' validate')
+            console.log(' routing')
             console.log(' ')
             break;
         }
@@ -117,20 +119,23 @@ switch(cmd) {
             //Format Validation
             let isValidateFail = false
             for (const fileName of files) {
-                let data = fs.readFileSync(path.join(inputPath, fileName),{ encoding:'utf8' });
-                try {
-                    data = JSON.parse(data)
-                } catch(e) {
-                    if(!isValidateFail) isValidateFail = !isValidateFail;
-                    console.log('Please check JSON format.')
-                    break;
-                }
-                const validateError = validate.postmanSchema(data)
-                if (validateError) {
-                    console.log('Please check schema format.')
-                    console.log('Error Message : '+ validateError)
-                    if(!isValidateFail) isValidateFail = !isValidateFail;
-                    break;
+                let isDirectory = fs.lstatSync(path.join(inputPath, fileName)).isDirectory()
+                if(!isDirectory) {
+                    let data = fs.readFileSync(path.join(inputPath, fileName),{ encoding:'utf8' });
+                    try {
+                        data = JSON.parse(data)
+                    } catch(e) {
+                        if(!isValidateFail) isValidateFail = !isValidateFail;
+                        console.log('Please check JSON format.')
+                        break;
+                    }
+                    const validateError = validate.postmanSchema(data)
+                    if (validateError) {
+                        console.log('Please check schema format.')
+                        console.log('Error Message : '+ validateError)
+                        if(!isValidateFail) isValidateFail = !isValidateFail;
+                        break;
+                    }
                 }
             }
             if(isValidateFail) break;
@@ -140,10 +145,21 @@ switch(cmd) {
             }
 
             let postmanData = basicFunction.generatePostmanFile({ env, inputPath, fileNames: files })
+            if(postmanData) {
+                if(Object.keys(JSON.parse(postmanData)).length === 0) break;
+            }
             fs.writeFileSync(path.join(outputPath, `collection_${env.projectName.toLowerCase()}_${new Date().toISOString()}.json`), postmanData);
         }
 
         if(type === 'modules' || type === 'm') {
+            console.log('coming soon.')
+        }
+
+        if(type === 'validate' || type === 'v') {
+            console.log('coming soon.')
+        }
+
+        if(type === 'routing' || type === 'r') {
             console.log('coming soon.')
         }
 
@@ -155,6 +171,8 @@ switch(cmd) {
         console.log('Available Schematics:')
         console.log(' modules')
         console.log(' postman')
+        console.log(' validate')
+        console.log(' routing')
         console.log(' ')
         break;
 }

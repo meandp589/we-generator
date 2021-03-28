@@ -123,41 +123,65 @@ exports.dataGenerator = (key, value) => {
 exports.generatePostmanFile = ({ env, inputPath, fileNames }) => {
 
     let items = []
+
+    try {
+        let initialCustomPath = path.join(inputPath, 'initialCustom')
+        let isDirectory = fs.lstatSync(initialCustomPath).isDirectory()
+        if(isDirectory) {
+            for (const fileName of fs.readdirSync(initialCustomPath)) {
+                let initData = fs.readFileSync(path.join(initialCustomPath, fileName),{ encoding:'utf8' });
+
+                try {
+                    initData = JSON.parse(initData)
+                    items.push(initData)
+                } catch (error) {
+                    console.log('Please check file in the init-custom.')
+                    return '{}'
+                }
+            }
+        }
+    } catch (error) {
+        console.log(error)
+    }
+
     for (const fileName of fileNames) {
         try {
-            let cmdData = fs.readFileSync(path.join(inputPath, fileName),{ encoding:'utf8' });
-            cmdData = JSON.parse(cmdData)
-            let body = JSON.stringify(this.buildMessage(cmdData),undefined, 2);
-            let name = fileName.replace('.json','')
-            let idName = camelToSnakeCase(name)
-            let cmdPath = idName.replace(/\_/g, '-')
-            let templateName = idName.replace(/\_/g, ' ')
-            let postmanItem = {
-                name: templateName,
-                item: []
-            }
-            let configPostmanFile = ['item-get-by-id.json','item-get.json','item-patch.json','item-post.json',  'item-put.json']
-
-            for (const postmanFileName of configPostmanFile) {
-                let templatePostmanData = fs.readFileSync(path.join(__dirname, '../..', 'config/postman', postmanFileName), { encoding:'utf8' });
-                let newPostmanData = templatePostmanData
-                    .replace(/\$\{templateName\}/g, templateName)
-                    .replace(/\$\{baseURL\}/g, env.baseURL)
-                    .replace(/\$\{path\}/g, cmdPath)
-                    .replace(/\$\{idName\}/g, `${idName}_id`);
-
-                newPostmanData = JSON.parse(newPostmanData)
-                if(newPostmanData.request.header) {
-                    newPostmanData.request.header = [...newPostmanData.request.header, ...env.headers]
+            let isDirectory = fs.lstatSync(path.join(inputPath, fileName)).isDirectory()
+            if(!isDirectory) {
+                let cmdData = fs.readFileSync(path.join(inputPath, fileName),{ encoding:'utf8' });
+                cmdData = JSON.parse(cmdData)
+                let body = JSON.stringify(this.buildMessage(cmdData),undefined, 2);
+                let name = fileName.replace('.json','')
+                let idName = camelToSnakeCase(name)
+                let cmdPath = idName.replace(/\_/g, '-')
+                let templateName = idName.replace(/\_/g, ' ')
+                let postmanItem = {
+                    name: templateName,
+                    item: []
                 }
+                let configPostmanFile = ['item-get-by-id.json','item-get.json','item-post.json', 'item-patch.json', 'item-put.json']
 
-                let method = newPostmanData.request.method
-                if(method === 'POST' || method === 'PATCH' || method === 'PUT') {
-                    newPostmanData.request.body.raw = body
+                for (const postmanFileName of configPostmanFile) {
+                    let templatePostmanData = fs.readFileSync(path.join(__dirname, '../..', 'config/postman', postmanFileName), { encoding:'utf8' });
+                    let newPostmanData = templatePostmanData
+                        .replace(/\$\{templateName\}/g, templateName)
+                        .replace(/\$\{baseURL\}/g, env.baseURL)
+                        .replace(/\$\{path\}/g, cmdPath)
+                        .replace(/\$\{idName\}/g, `${idName}_id`);
+
+                    newPostmanData = JSON.parse(newPostmanData)
+                    if(newPostmanData.request.header) {
+                        newPostmanData.request.header = [...newPostmanData.request.header, ...env.headers]
+                    }
+
+                    let method = newPostmanData.request.method
+                    if(method === 'POST' || method === 'PATCH' || method === 'PUT') {
+                        newPostmanData.request.body.raw = body
+                    }
+                    postmanItem.item.push(newPostmanData)
                 }
-                postmanItem.item.push(newPostmanData)
+                items.push(postmanItem)
             }
-            items.push(postmanItem)
 
         } catch(e) {
             console.log(e)

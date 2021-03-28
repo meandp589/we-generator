@@ -1,1 +1,1 @@
-./bin/global.js g postman schema-for-postman postman-file
+./bin/global.js g postman postman/schema postman/collections
