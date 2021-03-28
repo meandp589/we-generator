@@ -109,6 +109,11 @@ exports.dataGenerator = (key, value) => {
         return this.generateNumber(5)
     }
 
+    if(value.type == 'boolean') {
+        let boolData = [false, true]
+        return boolData[getRandomInt(0, boolData.length)]
+    }
+
     if(value.type == 'array') {
         return []
     }
