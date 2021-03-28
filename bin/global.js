@@ -43,6 +43,8 @@ switch(cmd) {
             .catch(err => console.error(err))
         break;
 
+    case '--v':
+    case '--version':
     case 'v':
     case 'version':
         let version = JSON.parse(fs.readFileSync(path.join(__dirname, '../package.json'))).version
@@ -64,7 +66,7 @@ switch(cmd) {
             break;
         }
             
-        if(type === 'postman') {
+        if(type === 'postman' || type === 'p') {
             let inputPath = args[2]
             let outputPath = args[3]
             if(!inputPath || !outputPath) {
@@ -141,7 +143,7 @@ switch(cmd) {
             fs.writeFileSync(path.join(outputPath, `collection_${env.projectName.toLowerCase()}_${new Date().toISOString()}.json`), postmanData);
         }
 
-        if(type === 'modules') {
+        if(type === 'modules' || type === 'm') {
             console.log('coming soon.')
         }
 

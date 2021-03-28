@@ -152,7 +152,7 @@ exports.generatePostmanFile = ({ env, inputPath, fileNames }) => {
                 }
 
                 let method = newPostmanData.request.method
-                if(method === 'POST' || method === 'PATCH' || method === 'POST') {
+                if(method === 'POST' || method === 'PATCH' || method === 'PUT') {
                     newPostmanData.request.body.raw = body
                 }
                 postmanItem.item.push(newPostmanData)
