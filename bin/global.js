@@ -10,7 +10,8 @@ let args = process.argv.splice(process.execArgv.length + 2);
 let [ cmd ] = args;
 
 switch(cmd) {
-    
+
+    case 'n':
     case 'new':
         let name = args[1];
         if(!name) {
@@ -43,8 +44,6 @@ switch(cmd) {
             .catch(err => console.error(err))
         break;
 
-    case '--v':
-    case '--version':
     case 'v':
     case 'version':
         let version = JSON.parse(fs.readFileSync(path.join(__dirname, '../package.json'))).version
@@ -168,13 +167,10 @@ switch(cmd) {
         break;
     default:
         console.log(' ')
-        console.log('usage: we generate <schematic> [options].')
-        console.log(' ')
-        console.log('Available Schematics:')
-        console.log(' modules')
-        console.log(' postman')
-        console.log(' validate')
-        console.log(' routing')
+        console.log('Available Commands:')
+        console.log(' version (v) Outputs We Generator version.')
+        console.log(' generate (g) Generates and/or modifies files based on a schematic.')
+        console.log(' new (n) Creates a new workspace and an initial Express.')
         console.log(' ')
         break;
 }
