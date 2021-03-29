@@ -175,9 +175,7 @@ exports.generatePostmanFile = ({ env, inputPath, fileNames }) => {
                 }
             }
         }
-    } catch (error) {
-        console.log(error)
-    }
+    } catch (error) { }
 
     for (const fileName of fileNames) {
         try {
