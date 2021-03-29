@@ -42,7 +42,7 @@ exports.padStart = (str, num, data) => {
 
 exports.generateString = (length) => {
     const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-    let result = ' ';
+    let result = '';
     const charactersLength = characters.length;
     for ( let i = 0; i < length; i++ ) {
         result += characters.charAt(Math.floor(Math.random() * charactersLength));
@@ -98,6 +98,18 @@ exports.dataGenerator = (key, value) => {
         }
     }
 
+    if('password' === key) {
+        if(value.default) {
+            return value.default
+        }
+        if(value.type === 'string') {
+            return this.generateString(10)
+        }
+        if(value.type === 'number') {
+            return this.generateNumber(10)
+        }
+    }
+
     if(value.default) {
        return value.default
     }
@@ -112,6 +124,15 @@ exports.dataGenerator = (key, value) => {
         }
         if(value.format === 'date') {
             return `${now.getFullYear()}-${now.getMonth()+1}-${now.getDate()}`
+        }
+        if(value.format === 'time') {
+            return `${now.getHours()}:${now.getMinutes()+1}:${now.getSeconds()}`
+        }
+        if(value.format === 'email') {
+            return `${this.generateName()}@gmail.com`
+        }
+        if(value.format === 'uuid') {
+            return uuidv4()
         }
     }
 
