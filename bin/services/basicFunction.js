@@ -33,7 +33,7 @@ exports.dateFormat = (now) => {
     let hours = this.padStart(now.getHours(), 2, "0")
     let minutes = this.padStart(now.getMinutes(), 2, "0")
     let seconds = this.padStart(now.getSeconds(), 2, "0")
-    return `${year}-${month}-${date}T${hours}:${minutes}:${seconds}`
+    return `${year}${month}${date}${hours}${minutes}${seconds}`
 }
 
 exports.padStart = (str, num, data) => {
