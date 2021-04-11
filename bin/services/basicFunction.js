@@ -183,7 +183,6 @@ exports.generatePostmanFile = ({ env, inputPath, fileNames }) => {
             if(!isDirectory && (/(.*)\.json$/.test(fileName) || /(.*)\.js$/.test(fileName))) {
 
                 let cmdData = require(path.join(inputPath, fileName))
-                console.log(cmdData)
                 let body = JSON.stringify(this.buildMessage(cmdData),undefined, 2);
                 let name = fileName.replace('.json','').replace('.js','')
                 let idName = camelToSnakeCase(name)
@@ -223,7 +222,6 @@ exports.generatePostmanFile = ({ env, inputPath, fileNames }) => {
             }
 
         } catch(e) {
-            console.log(e)
             console.log('Please check JSON format.')
             break;
         }
