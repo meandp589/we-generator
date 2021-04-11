@@ -180,11 +180,12 @@ exports.generatePostmanFile = ({ env, inputPath, fileNames }) => {
     for (const fileName of fileNames) {
         try {
             let isDirectory = fs.lstatSync(path.join(inputPath, fileName)).isDirectory()
-            if(!isDirectory) {
-                let cmdData = fs.readFileSync(path.join(inputPath, fileName),{ encoding:'utf8' });
-                cmdData = JSON.parse(cmdData)
+            if(!isDirectory && (/(.*)\.json$/.test(fileName) || /(.*)\.js$/.test(fileName))) {
+
+                let cmdData = require(path.join(inputPath, fileName))
+                console.log(cmdData)
                 let body = JSON.stringify(this.buildMessage(cmdData),undefined, 2);
-                let name = fileName.replace('.json','')
+                let name = fileName.replace('.json','').replace('.js','')
                 let idName = camelToSnakeCase(name)
                 let cmdPath = idName.replace(/\_/g, '-')
                 let templateName = idName.replace(/\_/g, ' ')

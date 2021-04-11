@@ -120,9 +120,9 @@ switch(cmd) {
             for (const fileName of files) {
                 let isDirectory = fs.lstatSync(path.join(inputPath, fileName)).isDirectory()
                 if(!isDirectory) {
-                    let data = fs.readFileSync(path.join(inputPath, fileName),{ encoding:'utf8' });
+                    let data = {}
                     try {
-                        data = JSON.parse(data)
+                        data = require(path.join(inputPath, fileName))
                     } catch(e) {
                         if(!isValidateFail) isValidateFail = !isValidateFail;
                         console.log('Please check JSON format.')
