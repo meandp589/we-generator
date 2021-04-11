@@ -4,7 +4,7 @@ const ajv = new Ajv({ allErrors: true, useDefaults: true });
 exports.envSchema = ( data ) => {
     let schema = {
         type: "object",
-        required: [],
+        required: ['idForEvent','projectName','baseURL'],
         additionalProperties: false,
         properties: {
           idForEvent: { type: "string" },

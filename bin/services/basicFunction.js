@@ -204,10 +204,14 @@ exports.generatePostmanFile = ({ env, inputPath, fileNames }) => {
 
                     newPostmanData = JSON.parse(newPostmanData)
                     if(newPostmanData.request.header) {
-                        newPostmanData.request.header = [...newPostmanData.request.header, ...env.headers]
+                        if(env.headers) {
+                            newPostmanData.request.header = [...newPostmanData.request.header, ...env.headers]
+                        }
                     }
 
-                    newPostmanData.request.auth = env.auth
+                    if(env.auth) {
+                        newPostmanData.request.auth = env.auth
+                    }
                     let method = newPostmanData.request.method
                     if(method === 'POST' || method === 'PATCH' || method === 'PUT') {
                         newPostmanData.request.body.raw = body
