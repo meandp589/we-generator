@@ -192,7 +192,7 @@ exports.generatePostmanFile = ({ env, inputPath, fileNames }) => {
                     name: templateName,
                     item: []
                 }
-                let configPostmanFile = ['item-get-by-id.json','item-get.json','item-post.json', 'item-patch.json', 'item-put.json']
+                let configPostmanFile = ['item-get-by-id.json','item-get.json','item-post.json', 'item-patch.json', 'item-put.json', 'item-delete.json']
 
                 for (const postmanFileName of configPostmanFile) {
                     let templatePostmanData = fs.readFileSync(path.join(__dirname, '../..', 'config/postman', postmanFileName), { encoding:'utf8' });
@@ -200,13 +200,14 @@ exports.generatePostmanFile = ({ env, inputPath, fileNames }) => {
                         .replace(/\$\{templateName\}/g, templateName)
                         .replace(/\$\{baseURL\}/g, env.baseURL)
                         .replace(/\$\{path\}/g, cmdPath)
-                        .replace(/\$\{idName\}/g, `${idName}_id`);
+                        .replace(/\$\{idName\}/g, env.idForEvent.replace(/\$\(cmd\)/g, idName));
 
                     newPostmanData = JSON.parse(newPostmanData)
                     if(newPostmanData.request.header) {
                         newPostmanData.request.header = [...newPostmanData.request.header, ...env.headers]
                     }
 
+                    newPostmanData.request.auth = env.auth
                     let method = newPostmanData.request.method
                     if(method === 'POST' || method === 'PATCH' || method === 'PUT') {
                         newPostmanData.request.body.raw = body

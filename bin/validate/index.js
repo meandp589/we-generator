@@ -7,6 +7,7 @@ exports.envSchema = ( data ) => {
         required: [],
         additionalProperties: false,
         properties: {
+          idForEvent: { type: "string" },
           projectName: { type: "string" },
           baseURL: { type: "string" },
           headers: { 
@@ -21,6 +22,9 @@ exports.envSchema = ( data ) => {
                     value: { type: "string" }
                 }
             }
+          },
+          auth: { 
+            type: "object"
           }
         }
     };
@@ -37,7 +41,6 @@ exports.postmanSchema = ( data ) => {
         properties: {
             "[\S+]": { 
                 type: "object",
-                additionalProperties: false,
                 properties: {
                     type: { type: "string" },
                     default: { type: "string" },
