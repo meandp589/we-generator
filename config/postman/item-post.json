@@ -14,7 +14,7 @@
                     "tests[\"Content-Type header is set\"] = postman.getResponseHeader(\"Content-Type\");",
                     "",
                     "var data = JSON.parse(responseBody);",
-                    "pm.environment.set(\"${idName}\", data.resultData.${idName});"
+                    "pm.environment.set(\"${idName}\", data.resultData.${idForEvent});"
                 ],
                 "type": "text/javascript"
             }

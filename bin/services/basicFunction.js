@@ -200,7 +200,8 @@ exports.generatePostmanFile = ({ env, inputPath, fileNames }) => {
                         .replace(/\$\{templateName\}/g, templateName)
                         .replace(/\$\{baseURL\}/g, env.baseURL)
                         .replace(/\$\{path\}/g, cmdPath)
-                        .replace(/\$\{idName\}/g, env.idForEvent.replace(/\$\(cmd\)/g, idName));
+                        .replace(/\$\{idForEvent\}/g, env.idForEvent.replace(/\$\(cmd\)/g, idName))
+                        .replace(/\$\{idName\}/g, idName);
 
                     newPostmanData = JSON.parse(newPostmanData)
                     if(newPostmanData.request.header) {
