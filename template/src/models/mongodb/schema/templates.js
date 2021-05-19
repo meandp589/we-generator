@@ -5,6 +5,12 @@ const TemplateSchema = new Schema({
     templateName: {
         type: String
     },
+    list: [String],
+    objectList: [{
+        name: {
+            type: String
+        }
+    }],
     createdAt: {
         type: Date,
         default: Date.now

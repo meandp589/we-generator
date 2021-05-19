@@ -24,7 +24,7 @@ exports.queryTemplateSchema = body => {
   };
   let validateBody = ajv.validate(schema, body);
   if (!validateBody) {
-    appLog.error({errorMessage: validateError});
+    let validateError = ajv.errorsText();
     return validateError;
   }
 };
@@ -37,6 +37,20 @@ exports.templateSchema = ({ body, required }) => {
     properties: {
       templateName: {
         type: "string"
+      },
+      list: {
+        type: "array"
+      },
+      objectList: {
+        type: "array",
+        items: {
+          type: 'object',
+          properties: {
+            name: {
+              type: "string"
+            }
+          }
+        }
       }
     }
   };
